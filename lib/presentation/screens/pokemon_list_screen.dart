@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poke_app/domain/entities/pokemon.dart';
 import '../providers/pokemon_provider.dart';
 import 'pokemon_detail_screen.dart';
+import 'package:poke_app/presentation/widgets/custom_app_bar.dart';
 
 /// Screen that displays a list of Pokémon.
 class PokemonListScreen extends ConsumerStatefulWidget {
@@ -16,7 +17,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
   int _offset = 0;
   bool _isLoading = false;
 
-  /// Initializes the state, loads initial Pokémon data, and sets up the scroll listener.
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
     });
   }
 
-  /// Loads more Pokémon data and updates the state.
   Future<void> _loadPokemons() async {
     setState(() {
       _isLoading = true;
@@ -43,25 +42,10 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
     });
   }
 
-  /// Builds the widget tree for the Pokémon list screen.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pokémon List', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-        centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-        elevation: 4,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.lightBlueAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: 'Pokémon List'),
       body: _pokemons.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
@@ -91,7 +75,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
     );
   }
 
-  /// Disposes the scroll controller when the widget is removed from the widget tree.
   @override
   void dispose() {
     _scrollController.dispose();

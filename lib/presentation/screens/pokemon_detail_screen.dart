@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/pokemon.dart';
+import 'package:poke_app/presentation/widgets/custom_app_bar.dart';
 
 /// Screen that displays the details of a Pokémon.
 ///
@@ -18,24 +19,7 @@ class PokemonDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          pokemon.name.capitalizeFirstLetter(),
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-        elevation: 4,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.lightBlueAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: pokemon.name.capitalizeFirstLetter()), // Usar el CustomAppBar aquí
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
