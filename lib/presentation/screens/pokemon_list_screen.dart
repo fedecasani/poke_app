@@ -86,19 +86,21 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              child: Text('Settings', style: TextStyle(color: Colors.white, fontSize: 24)),
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            Container(
+              height: 125,
+              child: DrawerHeader(
+                child: Text('Settings', style: TextStyle(color: Colors.white, fontSize: 24)),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
               ),
             ),
             ListTile(
               leading: Icon(isDarkMode ? Icons.bedtime : Icons.wb_sunny),
               title: Text(isDarkMode ? 'Modo Oscuro' : 'Modo Claro'),
               onTap: () {
-                // Alterna el tema
                 ref.read(themeProvider.notifier).toggleTheme();
-                Navigator.of(context).pop(); // Cierra el Drawer
+                Navigator.of(context).pop();
               },
             ),
           ],

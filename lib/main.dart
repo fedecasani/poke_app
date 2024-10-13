@@ -22,7 +22,7 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
         brightness: themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light,
       ),
-      home: PokemonListScreen(), // Pantalla principal de la aplicación
+      home: PokemonListScreen(),
     );
   }
 }
