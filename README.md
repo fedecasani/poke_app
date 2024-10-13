@@ -56,7 +56,7 @@ Esta aplicación Flutter permite a los usuarios explorar una lista de Pokémon u
     - **providers/**: Proveedores de estado de Riverpod.
     - **screens/**: Pantallas de la aplicación.
     - **widgets/**: Widgets personalizados.
-    - **core/**
+  - **core/**
     - **errors/**
     - **usecases/**
   - **main.dart**: Punto de entrada de la aplicación.
