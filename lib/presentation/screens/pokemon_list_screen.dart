@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:poke_app/domain/entities/pokemon.dart';
 import '../providers/pokemon_provider.dart';
+import '../providers/theme_provider.dart';
 import 'pokemon_detail_screen.dart';
-import 'package:poke_app/presentation/widgets/custom_app_bar.dart';
 
 /// Screen that displays a list of Pokémon.
 class PokemonListScreen extends ConsumerStatefulWidget {
@@ -11,12 +11,14 @@ class PokemonListScreen extends ConsumerStatefulWidget {
   _PokemonListScreenState createState() => _PokemonListScreenState();
 }
 
+/// State for the [PokemonListScreen].
 class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
   final ScrollController _scrollController = ScrollController();
   List<Pokemon> _pokemons = [];
   int _offset = 0;
   bool _isLoading = false;
 
+  /// Initializes the state, loads initial Pokémon data, and sets up the scroll listener.
   @override
   void initState() {
     super.initState();
@@ -28,13 +30,14 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
     });
   }
 
+  /// Loads more Pokémon data and updates the state.
   Future<void> _loadPokemons() async {
     setState(() {
       _isLoading = true;
     });
-    
+
     final pokemonList = await ref.read(pokemonListProvider(_offset).future);
-    
+
     setState(() {
       _pokemons.addAll(pokemonList);
       _offset += pokemonList.length;
@@ -42,10 +45,17 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
     });
   }
 
+  /// Builds the widget tree for the Pokémon list screen.
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark; // Obtiene el estado del tema
+
     return Scaffold(
-      appBar: CustomAppBar(title: 'Pokémon List'),
+      appBar: AppBar(
+        title: Text('Pokémon List', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        backgroundColor: Colors.blue, // Color del AppBar
+      ),
       body: _pokemons.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
@@ -72,9 +82,32 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
                 );
               },
             ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text('Settings', style: TextStyle(color: Colors.white, fontSize: 24)),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              leading: Icon(isDarkMode ? Icons.bedtime : Icons.wb_sunny),
+              title: Text(isDarkMode ? 'Modo Oscuro' : 'Modo Claro'),
+              onTap: () {
+                // Alterna el tema
+                ref.read(themeProvider.notifier).toggleTheme();
+                Navigator.of(context).pop(); // Cierra el Drawer
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
+  /// Disposes the scroll controller when the widget is removed from the widget tree.
   @override
   void dispose() {
     _scrollController.dispose();

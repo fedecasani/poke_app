@@ -18,8 +18,11 @@ class PokemonDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Obtiene el brillo actual del tema
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: CustomAppBar(title: pokemon.name.capitalizeFirstLetter()), // Usar el CustomAppBar aquí
+      appBar: CustomAppBar(title: pokemon.name.capitalizeFirstLetter()),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +36,11 @@ class PokemonDetailScreen extends StatelessWidget {
             ),
             Text(
               pokemon.name.capitalizeFirstLetter(),
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: isDarkMode ? Colors.white : Colors.black87, // Cambia el color según el modo
+              ),
             ),
           ],
         ),
