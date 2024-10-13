@@ -9,13 +9,13 @@ class PokemonModel extends Pokemon {
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     final url = json['url'] as String;
-    final id = url.split('/').reversed.skip(1).first; // Extrae el ID del Pokémon
-    final imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png'; // URL corregida
+    final id = url.split('/').reversed.skip(1).first;
+    final imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
 
     return PokemonModel(
       name: json['name'],
       url: url,
-      imageUrl: imageUrl, // Agrega la URL de la imagen
+      imageUrl: imageUrl,
     );
   }
 
@@ -23,7 +23,7 @@ class PokemonModel extends Pokemon {
     return {
       'name': name,
       'url': url,
-      'imageUrl': imageUrl, // Agrega la URL de la imagen
+      'imageUrl': imageUrl,
     };
   }
 }

@@ -11,6 +11,6 @@ class PokemonRepositoryImpl implements PokemonRepository {
   @override
   Future<List<Pokemon>> getPokemonList(int offset) async {
     final pokemonModels = await remoteDatasource.fetchPokemonList(offset);
-    return pokemonModels;  // No necesitas transformar porque ya son modelos válidos.
+    return pokemonModels;
   }
 }

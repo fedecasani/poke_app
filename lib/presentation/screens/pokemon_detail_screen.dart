@@ -11,7 +11,7 @@ class PokemonDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          pokemon.name.capitalizeFirstLetter(), // Asegúrate de tener una extensión para capitalizar
+          pokemon.name.capitalizeFirstLetter(),
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -32,18 +32,16 @@ class PokemonDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 16),
-            // Imagen del Pokémon más grande
             Image.network(
               pokemon.imageUrl,
-              width: 250,  // Aumenta el ancho de la imagen
-              height: 250, // Aumenta la altura de la imagen
+              width: 250,
+              height: 250,
               fit: BoxFit.cover,
             ),
             Text(
               pokemon.name.capitalizeFirstLetter(),
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
-            // Aquí podrías agregar más detalles del Pokémon si lo deseas
           ],
         ),
       ),
@@ -51,7 +49,6 @@ class PokemonDetailScreen extends StatelessWidget {
   }
 }
 
-// Extensión para capitalizar la primera letra de la cadena
 extension StringExtension on String {
   String capitalizeFirstLetter() {
     if (isEmpty) {
