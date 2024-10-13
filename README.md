@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Esta aplicación Flutter permite a los usuarios explorar una lista de Pokémon utilizando la [PokeAPI](https://pokeapi.co/). La aplicación está diseñada con una arquitectura limpia y utiliza Riverpod para la gestión de estado. Ofrece una interfaz de usuario atractiva y funcional, con la capacidad de alternar entre modos claro y oscuro.
+Esta aplicación Flutter permite a los usuarios explorar una lista de Pokémon utilizando la [PokeAPI](https://pokeapi.co/). La aplicación está diseñada con clean architecture y utiliza Riverpod para la gestión de estado. Ofrece una interfaz de usuario atractiva y funcional, con la capacidad de alternar entre modos claro y oscuro.
 
 ## Características
 
@@ -25,7 +25,7 @@ Esta aplicación Flutter permite a los usuarios explorar una lista de Pokémon u
 1. **Clona el repositorio:**
 
    ```bash
-   git clone https://github.com/tu-usuario/poke_app.git
+   git clone https://github.com/fedecasani/poke_app.git
    cd poke_app
    ```
 
@@ -56,7 +56,11 @@ Esta aplicación Flutter permite a los usuarios explorar una lista de Pokémon u
     - **providers/**: Proveedores de estado de Riverpod.
     - **screens/**: Pantallas de la aplicación.
     - **widgets/**: Widgets personalizados.
+    - **core/**
+    - **errors/**
+    - **usecases/**
   - **main.dart**: Punto de entrada de la aplicación.
+  
 
 ## Uso
 
