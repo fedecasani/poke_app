@@ -1,86 +1,87 @@
-# Pokémon List Application
+# Pokémon Application
 
-## Descripción
+## Description
 
-Esta aplicación Flutter permite a los usuarios explorar una lista de Pokémon utilizando la [PokeAPI](https://pokeapi.co/). La aplicación está diseñada con clean architecture y utiliza Riverpod para la gestión de estado. Ofrece una interfaz de usuario atractiva y funcional, con la capacidad de alternar entre modos claro y oscuro.
+This Flutter application allows users to explore a list of Pokémon using the [PokeAPI](https://pokeapi.co/). The app is designed with clean architecture and utilizes Riverpod for state management. It offers an attractive and functional user interface, with the ability to toggle between light and dark modes.
 
-## Características
+## Characteristics
 
-- Visualización de una lista de Pokémon con nombre e imagen.
-- Navegación a una pantalla de detalle de Pokémon al seleccionar un elemento de la lista.
-- Carga infinita de Pokémon a medida que el usuario se desplaza hacia abajo.
-- Alternancia entre modo claro y oscuro.
+- Display of a list of Pokémon with names and images.
+- Navigation to a Pokémon detail screen upon selecting an item from the list.
+- Infinite loading of Pokémon as the user scrolls down.
+- Toggle between light and dark mode.
 
-## Tecnologías Utilizadas
+## Technologies Used
 
 - Flutter
 - Dart
 - Riverpod
-- Dio (para solicitudes HTTP)
-- Mockito (para pruebas)
-- Flutter Test (para pruebas unitarias)
+- Dio (for HTTP requests)
+- Mockito (for testing)
+- Flutter Test (for unit testing)
 
-## Instalación
+## Installation
 
-1. **Clona el repositorio:**
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/fedecasani/poke_app.git
    cd poke_app
    ```
 
-2. **Instala las dependencias:**
+2. **Install the dependencies:**
 
    ```bash
    flutter pub get
    ```
 
-3. **Ejecuta la aplicación:**
+3. **Run the application:**
 
    ```bash
    flutter run
    ```
 
-## Estructura del Proyecto
+## Project Structure
 
 - **lib/**
   - **data/**
-    - **datasources/**: Fuentes de datos remotas y locales.
-    - **models/**: Modelos de datos.
-    - **repositories/**: Implementaciones de repositorios.
+    - **datasources/**: Remote and local data sources.
+    - **models/**: Data models.
+    - **repositories/**: Repository implementations.
   - **domain/**
-    - **entities/**: Entidades de negocio.
-    - **repositories/**: Interfaces de repositorio.
-    - **usecases/**: Casos de uso.
+    - **entities/**: Business entities.
+    - **repositories/**: Repository interfaces.
+    - **usecases/**: Use cases.
   - **presentation/**
-    - **providers/**: Proveedores de estado de Riverpod.
-    - **screens/**: Pantallas de la aplicación.
-    - **widgets/**: Widgets personalizados.
+    - **providers/**: Riverpod state providers.
+    - **screens/**: Application screens.
+    - **widgets/**: WCustom widgets.
   - **core/**
     - **errors/**
     - **usecases/**
-  - **main.dart**: Punto de entrada de la aplicación.
+  - **main.dart**: ntry point of the application.
   
 
-## Uso
+## Usage
 
-1. Al abrir la aplicación, se mostrará una lista de Pokémon.
-2. Desplázate hacia abajo para cargar más Pokémon.
-3. Toca un Pokémon para ver su detalle.
-4. Usa el menú desplegable para alternar entre el modo claro y oscuro.
+1. When you open the application, a list of Pokémon will be displayed.
+2. Scroll down to load more Pokémon.
+3. Tap a Pokémon to view its details.
+4. Use the dropdown menu to toggle between light and dark mode.
 
-## Pruebas
 
-La aplicación incluye pruebas unitarias para verificar la funcionalidad de las principales características. Puedes ejecutar las pruebas utilizando:
+## Tests
+
+The application includes unit tests to verify the functionality of the main features. You can run the tests using:
 
 ```bash
 flutter test
 ```
 
-### Ejemplos de Pruebas
+### Example Tests
 
-- **Prueba de Carga de Pokémon:** Verifica que se muestre una lista de Pokémon cuando se cargan los datos correctamente.
-- **Indicador de Carga:** Asegura que se muestre un indicador de carga mientras se están obteniendo datos.
+- **Pokémon Loading Test:** Verifies that a list of Pokémon is displayed when the data is loaded correctly.
+- **Loading Indicator:** Ensures that a loading indicator is shown while data is being fetched.
 
 ```dart
 testWidgets('should display a list of Pokémon when data is loaded', (WidgetTester tester) async {
@@ -88,10 +89,10 @@ testWidgets('should display a list of Pokémon when data is loaded', (WidgetTest
 });
 ```
 
-## Contribuciones
+## Contributions
 
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o envía un pull request.
+Contributions are welcome. If you would like to contribute, please open an issue or submit a pull request.
 
-## Licencia
+## License
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+This project is licensed under the MIT License. See the LICENSE file for more details.
