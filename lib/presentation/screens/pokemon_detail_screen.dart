@@ -5,13 +5,17 @@ import '../../domain/entities/pokemon_details.dart';
 import '../../domain/usecases/get_pokemon_details.dart';
 import 'package:poke_app/presentation/widgets/custom_app_bar.dart';
 
-/// Screen that displays the details of a Pokémon.
+/// A screen that displays the details of a Pokémon.
 ///
+/// This screen shows various information about a Pokémon including its
+/// image, height, weight, stats, types, and abilities.
 class PokemonDetailScreen extends StatefulWidget {
-  /// Instance of the Pokémon to be displayed on the screen.
+  /// The Pokémon instance to be displayed on the screen.
   final Pokemon pokemon;
 
-  /// Constructor for [PokemonDetailScreen].
+  /// Creates an instance of [PokemonDetailScreen].
+  ///
+  /// Requires a [Pokemon] object to display its details.
   const PokemonDetailScreen({super.key, required this.pokemon});
 
   @override
@@ -19,13 +23,15 @@ class PokemonDetailScreen extends StatefulWidget {
   _PokemonDetailScreenState createState() => _PokemonDetailScreenState();
 }
 
+/// The state class for [PokemonDetailScreen].
 class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
+  /// A [Future] that holds the details of the Pokémon.
   late Future<PokemonDetails> _pokemonDetails;
 
   @override
   void initState() {
     super.initState();
-    // Inicializa el futuro para obtener los detalles del Pokémon
+    // Initializes the future to fetch Pokémon details
     final getPokemonDetails = GetPokemonDetails(PokemonDetailsRepository());
     _pokemonDetails = getPokemonDetails.call(widget.pokemon.url);
   }
@@ -58,14 +64,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                     fit: BoxFit.cover,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(
-                        16.0), // Espaciado alrededor de la columna
+                    padding: const EdgeInsets.all(16.0), // Espaciado alrededor de la columna
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 16),
 
-                        // Mostrar Altura y Peso en una fila
+                        // Display Height and Weight in a row
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -117,28 +122,25 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
 
                         const SizedBox(height: 16),
 
-                        // Tabla para las estadísticas
+                        // Table for stats
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0), // Espaciado horizontal
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0), // Espaciado horizontal
                           child: Container(
                             decoration: BoxDecoration(
                               color: isDarkMode
                                   ? Colors.black
-                                  : Colors.lightBlue[
-                                      50], // Color de fondo de la tabla
+                                  : Colors.lightBlue[50], // Background color of the table
                               border: Border.all(
                                   color: isDarkMode
                                       ? Colors.black
-                                      : Colors.black), // Borde de la tabla
-                              borderRadius: BorderRadius.circular(
-                                  8), // Esquinas redondeadas
+                                      : Colors.black), // Border of the table
+                              borderRadius: BorderRadius.circular(8), // Rounded corners
                             ),
                             child: Table(
                               border: TableBorder.all(
                                   color: isDarkMode
                                       ? Colors.white
-                                      : Colors.black), // Bordes de la tabla
+                                      : Colors.black), // Borders of the table
                               columnWidths: const {
                                 0: FlexColumnWidth(1),
                                 1: FlexColumnWidth(1),
@@ -175,9 +177,11 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                               }).toList(),
                             ),
                           ),
-                        ), // Mostrar Tipos
+                        ),
 
                         const SizedBox(height: 16),
+
+                        // Display Types
                         RichText(
                           text: TextSpan(
                             children: [
@@ -205,7 +209,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
 
                         const SizedBox(height: 16),
 
-                        // Mostrar Habilidades
+                        // Display Abilities
                         RichText(
                           text: TextSpan(
                             children: [
@@ -248,6 +252,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
 
 /// Extension for the [String] class that provides additional methods.
 ///
+/// This extension includes methods to manipulate and format strings.
 extension StringExtension on String {
   /// Capitalizes the first letter of the string.
   ///
