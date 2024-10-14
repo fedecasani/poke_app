@@ -2,7 +2,7 @@
 
 ## Description
 
-This Flutter application allows users to explore a list of Pokémon using the [PokeAPI](https://pokeapi.co/). The app is designed with clean architecture and utilizes Riverpod for state management. It offers an attractive and functional user interface, with the ability to toggle between light and dark modes.
+This Flutter application allows users to explore a list of Pokémon using the [PokeAPI](https://pokeapi.co/). The app is designed with clean architecture and utilizes Riverpod for state management. It offers an attractive and functional user interface, with the ability to toggle between light and dark modes and pokemon search by name
 
 ## Characteristics
 
@@ -10,7 +10,8 @@ This Flutter application allows users to explore a list of Pokémon using the [P
 - Navigation to a Pokémon detail screen upon selecting an item from the list.
 - Infinite loading of Pokémon as the user scrolls down.
 - Toggle between light and dark mode.
-
+- Pokemon search by name
+  
 ## Technologies Used
 
 - Flutter
