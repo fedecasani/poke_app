@@ -18,7 +18,7 @@ class PokemonListScreen extends ConsumerStatefulWidget {
 /// controlling pagination, and interacting with the Pokémon detail screen.
 class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
   final ScrollController _scrollController = ScrollController();
-  List<Pokemon> _pokemons = [];
+  final List<Pokemon> _pokemons = [];
   List<Pokemon> _filteredPokemons = [];
   int _offset = 0;
   bool _isLoading = false;
@@ -72,19 +72,19 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pokémon List', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: const Text('Pokémon List', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
       body: Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           /// Carousel that displays Pokémon cards.
           SizedBox(
             height: 220,
             child: _pokemons.isEmpty
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : PageView.builder(
                     itemCount: _pokemons.length,
                     controller: PageController(viewportFraction: 0.5, initialPage: 1),
@@ -116,10 +116,10 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
                                     height: 120,
                                     fit: BoxFit.cover,
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Text(
                                     pokemon.name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -133,7 +133,7 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
                     },
                   ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           /// Search bar for filtering Pokémon
           Padding(
@@ -156,18 +156,18 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
               onChanged: _filterPokemons,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           /// List that displays Pokémon names and images.
           Expanded(
             child: _filteredPokemons.isEmpty
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
                     controller: _scrollController,
                     itemCount: _filteredPokemons.length + (_isLoading ? 1 : 0),
                     itemBuilder: (context, index) {
                       if (index == _filteredPokemons.length) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
 
                       final pokemon = _filteredPokemons[index];
@@ -175,7 +175,7 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
                         leading: Image.network(pokemon.imageUrl, width: 50, height: 50),
                         title: Text(
                           pokemon.name,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                         onTap: () {
                           Navigator.push(
@@ -197,11 +197,11 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
           children: [
             Container(
               height: 125,
-              child: DrawerHeader(
-                child: Text('Settings', style: TextStyle(color: Colors.white, fontSize: 24)),
+              child: const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.blue,
                 ),
+                child: Text('Settings', style: TextStyle(color: Colors.white, fontSize: 24)),
               ),
             ),
             ListTile(

@@ -203,7 +203,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                           ),
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         // Mostrar Habilidades
                         RichText(

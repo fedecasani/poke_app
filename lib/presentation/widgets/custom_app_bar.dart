@@ -9,20 +9,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Constructor for [CustomAppBar].
   /// 
   /// Requires a [title] to be displayed in the AppBar.
-  CustomAppBar({required this.title});
+  const CustomAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
         title,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       backgroundColor: Colors.blueAccent,
       elevation: 4,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.blue, Colors.lightBlueAccent],
             begin: Alignment.topLeft,
@@ -34,5 +34,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

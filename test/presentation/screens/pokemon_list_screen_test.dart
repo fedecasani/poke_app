@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,7 +41,7 @@ void main() {
     final mockRepository = MockPokemonRepository();
 
     when(mockRepository.getPokemonList(0)).thenAnswer((_) async {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return [
         Pokemon(name: 'Pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'),
         Pokemon(name: 'Charmander', url: 'https://pokeapi.co/api/v2/pokemon/4', imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'),
