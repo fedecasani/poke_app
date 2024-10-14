@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poke_app/domain/repositories/pokemon_details_repository.dart';
 import '../../domain/entities/pokemon.dart';
 import '../../domain/entities/pokemon_details.dart';
-import '../../domain/usecases/get_pokemon_details.dart'; // Asegúrate de importar tu caso de uso
+import '../../domain/usecases/get_pokemon_details.dart';
 import 'package:poke_app/presentation/widgets/custom_app_bar.dart';
 
 /// Screen that displays the details of a Pokémon.
@@ -12,9 +12,10 @@ class PokemonDetailScreen extends StatefulWidget {
   final Pokemon pokemon;
 
   /// Constructor for [PokemonDetailScreen].
-  PokemonDetailScreen({required this.pokemon});
+  const PokemonDetailScreen({super.key, required this.pokemon});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PokemonDetailScreenState createState() => _PokemonDetailScreenState();
 }
 
@@ -39,109 +40,204 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
         future: _pokemonDetails,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error al cargar detalles del Pokémon'));
+            return const Center(
+                child: Text('Error al cargar detalles del Pokémon'));
           } else if (snapshot.hasData) {
             final pokemonDetails = snapshot.data!;
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Image.network(
                     widget.pokemon.imageUrl,
                     width: 250,
                     height: 250,
                     fit: BoxFit.cover,
                   ),
-                  SizedBox(height: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.all(
+                        16.0), // Espaciado alrededor de la columna
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16),
 
-                      // Mostrar Altura y Peso en una fila
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Altura: ${pokemonDetails.height} dm',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'Peso: ${pokemonDetails.weight} hg',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 16),
-
-                      // Mostrar Tipos
-                      Text(
-                        'Tipos: ${pokemonDetails.types.map((type) => type.name.capitalizeFirstLetter()).join(', ')}',
-                        style: TextStyle(fontSize: 16),
-                      ),
-
-                      SizedBox(height: 8),
-
-                      // Mostrar Habilidades
-                      Text(
-                        'Habilidades: ${pokemonDetails.abilities.map((ability) => ability.name.capitalizeFirstLetter()).join(', ')}',
-                        style: TextStyle(fontSize: 16),
-                      ),
-
-                      SizedBox(height: 16),
-
-                      // Título para Estadísticas
-                      Text(
-                        'Estadísticas:',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-
-                      SizedBox(height: 8),
-
-                      // Tabla para las estadísticas
-                      Table(
-                        border: TableBorder.all(
-                            color: Colors.grey), // Líneas de la tabla
-                        columnWidths: {
-                          0: FlexColumnWidth(1),
-                          1: FlexColumnWidth(1),
-                        },
-                        children: pokemonDetails.stats.map((stat) {
-                          return TableRow(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  stat.name.capitalizeFirstLetter(),
-                                  style: TextStyle(fontSize: 16),
-                                ),
+                        // Mostrar Altura y Peso en una fila
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: 'Height: ',
+                                    style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(
+                                    text: '${pokemonDetails.height} dm',
+                                    style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  '${stat.baseStat}',
-                                  style: TextStyle(fontSize: 16),
-                                  textAlign: TextAlign.center,
-                                ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: 'Weight: ',
+                                    style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(
+                                    text: '${pokemonDetails.weight} hg',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Tabla para las estadísticas
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0), // Espaciado horizontal
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: isDarkMode
+                                  ? Colors.black
+                                  : Colors.lightBlue[
+                                      50], // Color de fondo de la tabla
+                              border: Border.all(
+                                  color: isDarkMode
+                                      ? Colors.black
+                                      : Colors.black), // Borde de la tabla
+                              borderRadius: BorderRadius.circular(
+                                  8), // Esquinas redondeadas
+                            ),
+                            child: Table(
+                              border: TableBorder.all(
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : Colors.black), // Bordes de la tabla
+                              columnWidths: const {
+                                0: FlexColumnWidth(1),
+                                1: FlexColumnWidth(1),
+                              },
+                              children: pokemonDetails.stats.map((stat) {
+                                return TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        stat.name.capitalizeFirstLetter(),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: isDarkMode
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${stat.baseStat}',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: isDarkMode
+                                                ? Colors.white
+                                                : Colors.black),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ), // Mostrar Tipos
+
+                        const SizedBox(height: 16),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Type(s): ',
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: pokemonDetails.types
+                                    .map((type) =>
+                                        type.name.capitalizeFirstLetter())
+                                    .join(', '),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black),
                               ),
                             ],
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
+                          ),
+                        ),
+
+                        SizedBox(height: 16),
+
+                        // Mostrar Habilidades
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Abilities: ',
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: pokemonDetails.abilities
+                                    .map((ability) =>
+                                        ability.name.capitalizeFirstLetter())
+                                    .join(', '),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             );
           } else {
-            return Center(
+            return const Center(
                 child: Text('No se encontraron detalles del Pokémon'));
           }
         },
@@ -160,6 +256,6 @@ extension StringExtension on String {
     if (isEmpty) {
       return '';
     }
-    return '${this[0].toUpperCase()}${this.substring(1)}';
+    return '${this[0].toUpperCase()}${substring(1)}';
   }
 }
