@@ -18,6 +18,8 @@ class GetPokemonList {
   ///
   /// The [offset] parameter is used to indicate the position from which
   /// to start retrieving the Pokémon list.
+  ///
+  /// Returns a [Future] that completes with a list of [Pokemon] objects.
   Future<List<Pokemon>> call(int offset) async {
     return await repository.getPokemonList(offset);
   }

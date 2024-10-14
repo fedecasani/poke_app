@@ -1,16 +1,21 @@
 /// Represents a Pokémon with its basic information.
 ///
 /// This class contains the essential attributes of a Pokémon, including
-/// its name, URL, and the associated image URL.
+/// its name, URL for accessing its details, and the associated image URL.
 class Pokemon {
-  final String name;      /// The name of the Pokémon.
-  final String url;       /// The URL to access the details of the Pokémon.
-  final String imageUrl;  /// The URL of the Pokémon's image.
+  /// The name of the Pokémon.
+  final String name;
 
-  /// Constructor for [Pokemon].
+  /// The URL to access the details of the Pokémon.
+  final String url;
+
+  /// The URL of the Pokémon's image.
+  final String imageUrl;
+
+  /// Creates an instance of [Pokemon].
   ///
   /// Requires the [name], [url], and [imageUrl] of the Pokémon as mandatory
-  /// parameters.
+  /// parameters to initialize the object.
   Pokemon({
     required this.name,
     required this.url,

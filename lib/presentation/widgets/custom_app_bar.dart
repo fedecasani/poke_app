@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 /// Custom AppBar widget that can be reused across different screens.
-///
+/// 
 /// This widget takes a [title] and displays it in the AppBar.
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   /// Constructor for [CustomAppBar].
-  ///
+  /// 
   /// Requires a [title] to be displayed in the AppBar.
   CustomAppBar({required this.title});
 

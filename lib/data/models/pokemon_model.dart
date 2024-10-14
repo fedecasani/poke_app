@@ -21,7 +21,7 @@ class PokemonModel extends Pokemon {
   /// to extract the Pokémon ID and generate the corresponding [imageUrl].
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     final url = json['url'] as String;
-    final id = url.split('/').reversed.skip(1).first;
+    final id = url.split('/').reversed.skip(1).first; // Extract Pokémon ID from URL
     final imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
 
     return PokemonModel(

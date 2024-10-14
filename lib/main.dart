@@ -12,7 +12,7 @@ void main() {
 class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Obtiene el tema actual desde el ThemeProvider
+    // Retrieves the current theme from the ThemeProvider.
     final themeMode = ref.watch(themeProvider);
 
     return MaterialApp(
@@ -22,7 +22,7 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
         brightness: themeMode == ThemeMode.dark ? Brightness.dark : Brightness.light,
       ),
-      home: PokemonListScreen(),
+      home: PokemonListScreen(), // Main screen of the application.
     );
   }
 }

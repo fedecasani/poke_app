@@ -7,7 +7,7 @@ import '../../domain/entities/pokemon.dart';
 import '../../domain/usecases/get_pokemon_list.dart';
 
 /// A state provider that retrieves a list of Pokémon from a specific offset.
-///
+/// 
 /// This provider uses [GetPokemonList] to access Pokémon data and manage
 /// loading state.
 final pokemonListProvider = FutureProvider.family<List<Pokemon>, int>((ref, offset) async {
@@ -16,7 +16,7 @@ final pokemonListProvider = FutureProvider.family<List<Pokemon>, int>((ref, offs
 });
 
 /// Provider for [GetPokemonList].
-///
+/// 
 /// This provider creates an instance of [GetPokemonList], which is used
 /// to obtain the list of Pokémon from the repository.
 final getPokemonListProvider = Provider<GetPokemonList>((ref) {
@@ -25,7 +25,7 @@ final getPokemonListProvider = Provider<GetPokemonList>((ref) {
 });
 
 /// Provider for the Pokémon repository.
-///
+/// 
 /// This provider creates an instance of [PokemonRepositoryImpl], which is
 /// responsible for obtaining Pokémon data through the remote data source.
 final pokemonRepositoryProvider = Provider<PokemonRepository>((ref) {
@@ -34,7 +34,7 @@ final pokemonRepositoryProvider = Provider<PokemonRepository>((ref) {
 });
 
 /// Provider for the remote data source to obtain Pokémon information.
-///
+/// 
 /// This provider creates an instance of [PokemonRemoteDatasourceImpl]
 /// using Dio to make HTTP requests.
 final pokemonRemoteDatasourceProvider = Provider<PokemonRemoteDatasource>((ref) {
