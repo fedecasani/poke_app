@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:poke_app/domain/entities/pokemon.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../providers/pokemon_provider.dart';
 import '../providers/theme_provider.dart';
 import 'pokemon_detail_screen.dart';
 
-/// A screen that displays a list of Pokémon.
-/// 
-/// It shows a carousel of Pokémon at the top and a list of Pokémon below it. 
-/// It uses a paginated approach to load more Pokémon as the user scrolls to the bottom of the list.
+/// Screen that displays a list of Pokémon with search and connectivity handling.
 class PokemonListScreen extends ConsumerStatefulWidget {
   @override
   _PokemonListScreenState createState() => _PokemonListScreenState();
 }
 
-/// State for the [PokemonListScreen] that manages loading Pokémon data, 
-/// controlling pagination, and interacting with the Pokémon detail screen.
 class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
   final ScrollController _scrollController = ScrollController();
   final List<Pokemon> _pokemons = [];
@@ -23,40 +20,66 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
   int _offset = 0;
   bool _isLoading = false;
   String _searchQuery = '';
+  bool _isConnected = true;
 
   @override
   void initState() {
     super.initState();
+    _checkConnectivity();
     _loadPokemons();
 
     _scrollController.addListener(() {
+      // Load more Pokémon when reaching the bottom of the list
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && !_isLoading) {
         _loadPokemons();
       }
     });
   }
 
-  /// Loads Pokémon data and updates the internal state.
+  /// Checks the network connectivity status.
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _isConnected = connectivityResult != ConnectivityResult.none;
+    });
+  }
+
+  /// Loads Pokémon from the API or local storage.
   Future<void> _loadPokemons() async {
     setState(() {
       _isLoading = true;
     });
 
-    final pokemonList = await ref.read(pokemonListProvider(_offset).future);
+    try {
+      // Fetch Pokémon from the provider
+      final pokemonList = await ref.read(pokemonListProvider(_offset).future);
+      
+      // Open the Hive box and store fetched Pokémon
+      final box = await Hive.openBox<Pokemon>('pokemonBox');
+      for (var pokemon in pokemonList) {
+        await box.put(pokemon.name, pokemon);
+      }
 
-    setState(() {
-      _pokemons.addAll(pokemonList);
-      _filteredPokemons = _pokemons;
-      _offset += pokemonList.length;
-      _isLoading = false;
-    });
+      setState(() {
+        _pokemons.addAll(pokemonList);
+        _filteredPokemons = _pokemons;
+        _offset += pokemonList.length;
+        _isLoading = false;
+      });
+    } catch (e) {
+      // Load stored Pokémon from Hive if fetching fails
+      final box = await Hive.openBox<Pokemon>('pokemonBox');
+      final storedPokemons = box.values.toList();
+
+      setState(() {
+        _pokemons.addAll(storedPokemons);
+        _filteredPokemons = _pokemons;
+        _isLoading = false;
+      });
+    }
   }
 
-  /// Filters the Pokémon based on the search query.
-  ///
-  /// This method updates the [_filteredPokemons] list with Pokémon that match the given [query].
-  /// 
-  /// The search is case insensitive.
+  /// Filters Pokémon based on the search query.
   void _filterPokemons(String query) {
     setState(() {
       _searchQuery = query.toLowerCase();
@@ -79,8 +102,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
       body: Column(
         children: [
           const SizedBox(height: 20),
-
-          /// Carousel that displays Pokémon cards.
           SizedBox(
             height: 220,
             child: _pokemons.isEmpty
@@ -110,12 +131,19 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.network(
-                                    pokemon.imageUrl,
-                                    width: 120,
-                                    height: 120,
-                                    fit: BoxFit.cover,
-                                  ),
+                                  _isConnected
+                                      ? Image.network(
+                                          pokemon.imageUrl,
+                                          width: 120,
+                                          height: 120,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+                                        )
+                                      : Image.asset(  // Cambiar a una imagen local o placeholder
+                                          'assets/images/placeholder.png', // Asegúrate de tener esta imagen
+                                          width: 120,
+                                          height: 120,
+                                        ),
                                   const SizedBox(height: 10),
                                   Text(
                                     pokemon.name,
@@ -134,8 +162,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
                   ),
           ),
           const SizedBox(height: 16),
-
-          /// Search bar for filtering Pokémon
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
             child: TextField(
@@ -157,8 +183,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
             ),
           ),
           const SizedBox(height: 16),
-
-          /// List that displays Pokémon names and images.
           Expanded(
             child: _filteredPokemons.isEmpty
                 ? const Center(child: CircularProgressIndicator())
@@ -172,7 +196,13 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
 
                       final pokemon = _filteredPokemons[index];
                       return ListTile(
-                        leading: Image.network(pokemon.imageUrl, width: 50, height: 50),
+                        leading: _isConnected
+                            ? Image.network(pokemon.imageUrl, width: 50, height: 50, errorBuilder: (context, error, stackTrace) => const Icon(Icons.error))
+                            : Image.asset( // Cambiar a una imagen local o placeholder
+                                'assets/images/placeholder.png', // Asegúrate de tener esta imagen
+                                width: 50,
+                                height: 50,
+                              ),
                         title: Text(
                           pokemon.name,
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
@@ -189,8 +219,6 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
           ),
         ],
       ),
-
-      /// Drawer that contains a toggle for switching between dark and light mode.
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -220,6 +248,7 @@ class _PokemonListScreenState extends ConsumerState<PokemonListScreen> {
 
   @override
   void dispose() {
+    Hive.close();
     _scrollController.dispose();
     super.dispose();
   }

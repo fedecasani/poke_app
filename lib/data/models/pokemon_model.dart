@@ -9,6 +9,7 @@ class PokemonModel extends Pokemon {
   /// 
   /// Takes the [name], [url], and [imageUrl] of the Pokémon. Calls the
   /// constructor of the parent class [Pokemon].
+  // ignore: use_super_parameters
   PokemonModel({
     required String name,
     required String url,
